@@ -8,13 +8,13 @@ import EditScreenInfo from '../components/edit-screen-info';
 import { getBooks, getSingleBook } from '~/api/bookapi';
 
 export default function ModalScreen() {
-  const booksQuery = useQuery({
+  useQuery({
     queryKey: ['books'],
     queryFn: () => getBooks(),
   });
 
-  const singleBookQuery = useQuery({
-    queryKey: ['book'],
+  useQuery({
+    queryKey: ['SingleBook'],
     queryFn: () => getSingleBook(),
   });
 
