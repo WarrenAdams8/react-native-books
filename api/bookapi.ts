@@ -3,7 +3,7 @@ import { booksApiResponseSchema, BooksApiResponse, Book, bookSchema } from '~/ty
 const BOOKS_URL = process.env.EXPO_PUBLIC_GOOGLE_BOOKS_URL;
 const PARAMS = process.env.EXPO_PUBLIC_PARAMS;
 
-export const getBooks = async (query = 'Hello+Kitty'): Promise<Book[]> => {
+export const getBooks = async (query = 'Harry+Potter'): Promise<Book[]> => {
   const response = await fetch(`${BOOKS_URL}?q=${query}${PARAMS}`);
   const data: BooksApiResponse = await response.json();
 

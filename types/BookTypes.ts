@@ -18,13 +18,20 @@ const PanelizationSummary = z
   .optional()
   .default({ containsEpubBubbles: false, containsImageBubbles: false });
 
+// there will never be a default image. This is a work around to type the defualt image after transformation.
 const ImageLinks = z
   .object({
     smallThumbnail: z.string(),
     thumbnail: z.string(),
+    image: z.string().optional(),
   })
+  .transform((links) => ({
+    ...links,
+    image: `${links.thumbnail}&fife=w594-h900`,
+  }))
   .optional()
   .default({
+    image: 'https://placehold.co/594x900',
     smallThumbnail: 'https://placehold.co/128x192',
     thumbnail: 'https://placehold.co/128x192',
   });
