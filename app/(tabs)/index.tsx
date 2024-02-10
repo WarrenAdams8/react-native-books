@@ -1,15 +1,37 @@
-import { YStack, H2, Separator, Theme } from 'tamagui';
+import { FlashList } from '@shopify/flash-list';
+import { useQuery } from '@tanstack/react-query';
+import { Link } from 'expo-router';
+import { Pressable } from 'react-native';
+import { H4, YStack } from 'tamagui';
 
-import EditScreenInfo from '../../components/edit-screen-info';
+import { getBooks, getSingleBook } from '~/api/bookapi';
 
 export default function TabOneScreen() {
+  const books = useQuery({
+    queryKey: ['books'],
+    queryFn: () => getBooks(),
+  });
+
+  useQuery({
+    queryKey: ['SingleBook'],
+    queryFn: () => getSingleBook(),
+  });
+
   return (
-    <Theme name="light">
-      <YStack flex={1} alignItems="center" justifyContent="center">
-        <H2>Tab One</H2>
-        <Separator />
-        <EditScreenInfo path="app/(tabs)/index.tsx" />
-      </YStack>
-    </Theme>
+    <YStack flex={1} space="$2" borderWidth={2} borderColor="$color" borderRadius="$4" padding="$2">
+      <FlashList
+        data={books.data}
+        renderItem={({ item }) => (
+          <Link href={`/${item.id}`} asChild>
+            <Pressable>
+              <H4 padding="$2" color="$blue10Dark">
+                {item.volumeInfo.title}
+              </H4>
+            </Pressable>
+          </Link>
+        )}
+        estimatedItemSize={30}
+      />
+    </YStack>
   );
 }

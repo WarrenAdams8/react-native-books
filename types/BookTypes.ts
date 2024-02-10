@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { cleanDescription } from '~/utils/cleanDescription';
+
 const IndustryIdentifier = z.object({
   type: z.string(),
   identifier: z.string(),
@@ -101,15 +103,19 @@ const AccessInfo = z.object({
 const VolumeInfo = z.object({
   title: z.string(),
   subtitle: z.string().optional().default(''),
-  authors: z.array(z.string()).optional().default([]),
+  authors: z.array(z.string()).optional().default(['Unknown']),
   publisher: z.string().optional().default(''),
   publishedDate: z.string().optional().default(''),
-  description: z.string().optional().default('No description'),
+  description: z
+    .string()
+    .transform((description) => cleanDescription(description))
+    .optional()
+    .default('No description'),
   industryIdentifiers: z.array(IndustryIdentifier).optional().default([]),
   readingModes: ReadingModes,
   pageCount: z.number().optional().default(0),
   printType: z.string().optional().default(''),
-  categories: z.array(z.string()).optional().default([]),
+  categories: z.array(z.string()).optional().default(['N/A']),
   averageRating: z.number().optional().default(0),
   ratingsCount: z.number().optional().default(0),
   maturityRating: z.string(),

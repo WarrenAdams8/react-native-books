@@ -14,8 +14,6 @@ export const getBooks = async (query = 'Harry+Potter'): Promise<Book[]> => {
     return [];
   }
 
-  console.log(validatedBooks.data.items);
-
   return validatedBooks.data.items;
 };
 
@@ -26,7 +24,6 @@ export const getSingleBook = async (id = 'wrOQLV6xB-wC'): Promise<Book> => {
   const validatedBook = bookSchema.safeParse(data);
 
   if (validatedBook.success) {
-    console.log(validatedBook.data);
     return validatedBook.data;
   } else {
     console.error(validatedBook.error);
